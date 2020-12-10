@@ -91,7 +91,7 @@ def main():
             cost2 += cos_sim_sum.item() * num
             total_num += num
             optimizer.step()
-        train_re = evaluate_train(train_generator, model, args.margin)
+        train_re = evaluate_train(train_generator, model)
         dev_re, dev_cost = evaluate_dev(train_generator, model, args.margin)
         if dev_re > best_result:
             best_result = dev_re
@@ -105,7 +105,7 @@ def main():
     print "Performance on Test: F", re
 
 
-ddef evaluate_train(generator, model):
+def evaluate_train(generator, model):
     pr = []
     acc_num, total_num = 0, 0
     for data in generator.generate_data():
@@ -131,7 +131,7 @@ ddef evaluate_train(generator, model):
         predict.append(result[index])
     return sum(predict) / float(len(predict))
 
-ef evaluate_dev(generator, model, margin):
+def evaluate_dev(generator, model, margin):
     pr = []
     acc_num, total_num, cost = 0, 0, 0.0
     for data in generator.generate_dev_data():
